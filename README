@@ -1,0 +1,17 @@
+To compile, first set an environment variable IDEA_HOME pointing to the top level of your IDEA tree.
+
+e.g.
+  declare -x IDEA=/opt/local/idea10
+  ant
+
+You call it up with Alt-Shift-4.
+
+If you have text selected it'll pass it to the shell command and
+replace your selection with the output.  If you don't have text
+selected it'll insert the output of the shell command.
+
+If you do silly things, you'll get silly results...  e.g. 'sleep 10'
+will freeze IJ for 10 seconds! If you do something that freezes for
+too long, you can kill that process, and IJ will come back.
+
+It does not work on Windows yet.
