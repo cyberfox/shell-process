@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ShellProcess" default="jar" basedir='.'>
+  <property environment="env" />
+
+  <property name="main.dir" value="." /> 
+  <property name="src.dir" value="src" />
+  <property name="build.dir" value="classes" />
+  <property name="intellij.home" value="${env.IDEA_HOME}" />
+  <property name="MANIFEST" value="META-INF/MANIFEST.MF" />
+  <property name="BINARY" value="ShellProcess.jar" />
+
+  <path id="intellij.classpath">
+    <pathelement path="${intellij.home}/lib/idea.jar" />
+    <pathelement path="${intellij.home}/lib/openapi.jar" />
+    <pathelement path="${intellij.home}/lib/util.jar" />
+    <pathelement path="${intellij.home}/lib/extensions.jar" />
+  </path>
+
+  <target name="jar" depends="compile">
+    <echo level="info" message="Building primary .jar file." />
+
+    <manifest file="${MANIFEST}">
+      <attribute name="Manifest-Version" value="1.0"/>
+      <attribute name="Created-By" value="Morgan Schweers @ Google Inc"/>
+      <attribute name="Built-By" value="${user.name}"/>
+    </manifest>
+
+    <jar jarfile="${BINARY}" manifest="${MANIFEST}" index="true">
+      <fileset dir="${build.dir}" includes="**/*.class" />
+      <fileset dir="${main.dir}" includes="META-INF/plugin.xml" />
+    </jar>
+  </target>
+
+  <target name="compile">
+    <tstamp/>
+    <mkdir dir="${build.dir}" />
+    <javac srcdir="${src.dir}" destdir="${build.dir}" debug="on" includeantruntime="false" >
+      <classpath refid="intellij.classpath" />
+      <include name="**/*.java" />
+    </javac>
+  </target>
+
+  <target name="clean" description="Clean all build products.">
+    <echo level="info" message="Clean all build products." />
+    <delete file="${BINARY}" />
+    <delete>
+      <fileset dir="${build.dir}" includes="**/*.class" />
+    </delete>
+  </target>
+</project>
