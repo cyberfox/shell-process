@@ -1,10 +1,13 @@
-To compile, first set an environment variable IDEA_HOME pointing to the top level of your IDEA tree.
+To compile, first set an environment variable IDEA_HOME pointing to
+the top level of your IDEA tree.
 
 e.g.
   declare -x IDEA=/opt/local/idea10
   ant
 
-You call it up with Alt-Shift-4.
+You call it up with Alt-Shift-` (backtick).
+(Think of it like embedding the output of a shell command using
+backticks in the shell.)
 
 If you have text selected it'll pass it to the shell command and
 replace your selection with the output.  If you don't have text
