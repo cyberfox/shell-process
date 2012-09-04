@@ -2,19 +2,20 @@
   <name>Shell Process</name>
   <description>Run a shell command on selected lines</description>
   <version>1.2</version>
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.openapi.util</depends>
+  <depends>com.intellij.openapi.project</depends>
+  <depends>com.intellij.openapi.editor.actionSystem</depends>
   <vendor email="cyberfox@gmail.com" url="http://code.google.com/p/shell-process/">Morgan Schweers</vendor>
   <idea-version since-build="8000"/>
 
   <actions>
-    <group id="shellprocess.run.group">
-      <separator/>
-      <action id="shellprocess.run"
-              class="com.google.idea.plugins.shellprocess.ShellProcess"
-              text="Run Shell Command on Lines"
-              description="Pass selected lines to a shell command and replace them with its output; if selection is empty insert the output of a shell command at the cursor. Launch with Shift-Alt-BackQuote (S-A-`)">
-        <keyboard-shortcut keymap="$default" first-keystroke="shift alt BACK_QUOTE"/>
-      </action>
+    <action id="shellprocess.run"
+            class="com.google.idea.plugins.shellprocess.ShellProcess"
+            text="Run Shell Command on Lines"
+            description="Pass selected lines to a shell command and replace them with its output; if selection is empty insert the output of a shell command at the cursor. Launch with Shift-Alt-BackQuote (S-A-`)">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift alt BACK_QUOTE"/>
       <add-to-group group-id="EditMenu" anchor="last"/>
-    </group>
+    </action>
   </actions>
 </idea-plugin>

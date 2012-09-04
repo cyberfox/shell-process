@@ -10,7 +10,6 @@
   <property name="BINARY" value="ShellProcess.jar" />
 
   <path id="intellij.classpath">
-    <pathelement path="${intellij.home}/lib/idea.jar" />
     <pathelement path="${intellij.home}/lib/openapi.jar" />
     <pathelement path="${intellij.home}/lib/util.jar" />
     <pathelement path="${intellij.home}/lib/extensions.jar" />
