@@ -20,7 +20,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import com.intellij.openapi.editor.actions.TextComponentEditorAction;
+import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 
@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Morgan Schweers
  */
-public class ShellProcess extends TextComponentEditorAction {
+public class ShellProcess extends EditorAction {
   private static final Key<String> DEFAULT_COMMAND_KEY =
       Key.create("SHELL_PROCESS_DEFAULT_COMMAND");
 
