@@ -13,16 +13,21 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-package com.google.idea.plugins.shellprocess;
+package com.cyberfox.idea.plugins.shellprocess;
 
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -39,37 +44,40 @@ public class ShellProcess extends EditorAction {
       Key.create("SHELL_PROCESS_DEFAULT_COMMAND");
 
   protected ShellProcess() {
-    super(new Handler());
+    super(new AltHandler());
   }
 
-  private static class Handler extends EditorWriteActionHandler {
+  private static class AltHandler extends EditorActionHandler {
     @Override
-    public void executeWriteAction(Editor editor, DataContext dataContext) {
+    protected void doExecute(@NotNull Editor editor, @Nullable Caret caret, DataContext dataContext) {
       final Document doc = editor.getDocument();
       String priorCmd = getPriorCommand(editor);
 
       SelectionModel selected = editor.getSelectionModel();
       boolean hasSelection = selected.hasSelection();
+      Project currentProject = editor.getProject();
       if(hasSelection) {
         int startAt = selected.getSelectionStart();
         int endAt = selected.getSelectionEnd();
         String fixup = selected.getSelectedText();
         String command = JOptionPane.showInputDialog(
-            "Shell command to run on selected lines:", priorCmd);
+                "Shell command to run on selected lines:", priorCmd);
         if(command != null && !command.equals("")) {
           saveCommand(editor, command);
           String replacement = process(command, fixup);
           if(replacement != null) {
-            doc.replaceString(startAt, endAt, replacement);
+            Runnable r = () -> doc.replaceString(startAt, endAt, replacement);
+            WriteCommandAction.runWriteCommandAction(currentProject, r);
           }
         }
       } else {
         String command = JOptionPane.showInputDialog(
-            "Shell command to insert at current location:", priorCmd);
+                "Shell command to insert at current location:", priorCmd);
         if(command != null && !command.equals("")) {
           String insertion = process(command, "");
           if(insertion != null) {
-            doc.insertString(editor.getCaretModel().getOffset(), insertion);
+            Runnable r = () -> doc.insertString(editor.getCaretModel().getOffset(), insertion);
+            WriteCommandAction.runWriteCommandAction(currentProject, r);
           }
         }
       }

@@ -1,14 +1,15 @@
-<idea-plugin version="2">
+<idea-plugin>
   <name>Shell Process</name>
-  <description>Run a shell command on selected lines</description>
-  <version>1.3.1</version>
+  <description>Run a shell command on selected lines or the entire current buffer.</description>
+  <version>1.3.2</version>
+  <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.lang</depends>
   <vendor email="cyberfox@gmail.com" url="http://code.google.com/p/shell-process/">Morgan Schweers</vendor>
   <idea-version since-build="8000"/>
 
   <actions>
     <action id="shellprocess.run"
-            class="com.google.idea.plugins.shellprocess.ShellProcess"
+            class="com.cyberfox.idea.plugins.shellprocess.ShellProcess"
             text="Run Shell Command on Lines"
             description="Pass selected lines to a shell command and replace them with its output; if selection is empty insert the output of a shell command at the cursor. Launch with Shift-Alt-BackQuote (S-A-`)">
       <keyboard-shortcut keymap="$default" first-keystroke="shift alt BACK_QUOTE"/>
